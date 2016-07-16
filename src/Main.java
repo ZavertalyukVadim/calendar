@@ -51,12 +51,17 @@ public class Main {
 
     private static void conclusion(int dayInMonth) {
         System.out.println("____________________________________________________________");
-        System.out.println("|MONDAY| TUESDAY| WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY|");
+        System.out.print("|MONDAY| TUESDAY| WEDNESDAY|THURSDAY|FRIDAY");
+        System.out.print((char) 27 + "[31m|SATURDAY" + (char) 27 + "[0m");
+        System.out.println((char) 27 + "[31m|Sunday" + (char) 27 + "[0m");
         System.out.println("____________________________________________________________");
         for(int i=1;i<= dayInMonth;i++){
             if(i==8 || i==15 || i==22 || i==29)
                 System.out.println();
-            System.out.printf("%8d", i);
+            if(i==6 || i==7 || i==13 || i==14 || i==20 || i==21 || i==27 || i==28 || i==34)
+                System.out.printf((char) 27 + "[31m%8d " + (char) 27 + "[0m",i);
+            else System.out.printf("%8d", i);
+
         }
     }
 

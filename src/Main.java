@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         LocalDate today = LocalDate.now();
+        System.out.println("Введите год, месяц и день, на которые хотите увидеть календарь, если хотите увидеть календарь текущего времени, просто, заполните поля '0'");
         System.out.println("Введите год: ");
         int year = Integer.parseInt(input.readLine());
         System.out.println("Введите месяц(от 1 до 12): ");

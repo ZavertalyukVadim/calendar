@@ -45,14 +45,27 @@ public class Main {
 
 
         //узнаем количество дней в заданом месяце
-        howDayInMonth(year, month, day);
+        int DayInMonth= howDayInMonth(year, month, day);
+        conclusion(DayInMonth);
     }
 
-    private static void howDayInMonth(int year, int month, int day) {
+    private static void conclusion(int dayInMonth) {
+        System.out.println("____________________________________________________________");
+        System.out.println("|MONDAY| TUESDAY| WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY|");
+        System.out.println("____________________________________________________________");
+        for(int i=1;i<= dayInMonth;i++){
+            if(i==8 || i==15 || i==22 || i==29)
+                System.out.println();
+            System.out.printf("%8d", i);
+        }
+    }
+
+    private static int howDayInMonth(int year, int month, int day) {
         Calendar myCalendar = (Calendar) Calendar.getInstance().clone();
         myCalendar.set(year, month,day);
         int max_date = myCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         System.out.println(max_date);
+        return max_date;
     }
 
     private static int getDayOfWeek(LocalDate specificDate) {

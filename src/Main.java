@@ -12,21 +12,22 @@ import java.util.Calendar;
 public class Main {
     public static void main(String[] args) throws IOException {
         int[][] a = new int[6][7];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j <6 ; j++) {
-                a[i][j]=0;
-            }
-        }
+//        for (int i = 0; i < 5; i++) {
+//            for (int j = 0; j <6 ; j++) {
+//                a[i][j]=0;
+//            }
+//        }
+
 
         //задаем год,месяц,время
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         LocalDate today = LocalDate.now();
         System.out.println("Введите год, месяц и день, на которые хотите увидеть календарь, если хотите увидеть календарь текущего времени, просто, заполните поля '0'");
-        System.out.println("Введите год: ");
+        System.out.println("Введите год (прим.2016): ");
         int year = Integer.parseInt(input.readLine());
         System.out.println("Введите месяц(от 1 до 12): ");
         int month = Integer.parseInt(input.readLine());
-        System.out.println("Введите день: ");
+        System.out.println("Введите день(от 1 до 31 учитывая количество дней в каждом месяце): ");
         int day = Integer.parseInt(input.readLine());
         if(year == 0 && month==0&&day ==0){
             year=today.getYear();
@@ -34,17 +35,16 @@ public class Main {
             day=today.getDayOfMonth();
         }
 
-
-        //выводим введенное дату,время
         LocalDate specificDate = LocalDate.of(year, Month.of(month), day);
-
 
         //с какого дня начинаеться месяц
         int dayOfWeek = getDayOfWeek(specificDate);
 
         //узнаем количество дней в заданом месяце
         int dayInMonth= howDayInMonth(year, month, day);
-        print(a, dayOfWeek, dayInMonth);
+        enteringIntoAnArray(a, dayOfWeek, dayInMonth);
+
+        // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
         conclusion(a, day);
     }
@@ -60,14 +60,15 @@ public class Main {
                 if(j==5 || j==6 )
                     if(a[i][j]==day)System.out.printf((char) 27 + "[32m%8d " + (char) 27 + "[0m",a[i][j]);
                     else System.out.printf((char) 27 + "[31m%8d " + (char) 27 + "[0m",a[i][j]);
-                else System.out.printf("%8d", a[i][j]);
+                else    if(a[i][j]==day)System.out.printf((char) 27 + "[32m%8d " + (char) 27 + "[0m",a[i][j]);
+                else    System.out.printf("%8d", a[i][j]);
 
             }
             System.out.println();
         }
     }
 
-    private static void print(int[][] a, int dayOfWeek, int dayInMonth) {
+    private static void enteringIntoAnArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number=1;
         for (int i = dayOfWeek-1; i <7 ; i++) {
             a[0][i]=number;

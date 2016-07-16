@@ -11,6 +11,12 @@ import java.util.Calendar;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
+        int[][] a = new int[6][7];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j <6 ; j++) {
+                a[i][j]=0;
+            }
+        }
 
         //задаем год,месяц,время
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -31,39 +37,52 @@ public class Main {
 
         //выводим введенное дату,время
         LocalDate specificDate = LocalDate.of(year, Month.of(month), day);
-        System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
-//        System.out.println("Первый день этого месяца : " + today.with(TemporalAdjusters.firstDayOfMonth()));
 
 
         //с какого дня начинаеться месяц
         int dayOfWeek = getDayOfWeek(specificDate);
-        System.out.println(dayOfWeek);
-//        Calendar c2 = new GregorianCalendar(year, month-1, day);
-//        System.out.println(c2.getTime());
-//        c2.add(Calendar.DAY_OF_MONTH, 1);
-//        System.out.println(c2.getTime());
-
 
         //узнаем количество дней в заданом месяце
-        int DayInMonth= howDayInMonth(year, month, day);
-        conclusion(DayInMonth);
+        int dayInMonth= howDayInMonth(year, month, day);
+        print(a, dayOfWeek, dayInMonth);
+        System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
+        conclusion(a, day);
     }
 
-    private static void conclusion(int dayInMonth) {
+    private static void conclusion(int[][] a, int day) {
         System.out.println("____________________________________________________________");
         System.out.print("|MONDAY| TUESDAY| WEDNESDAY|THURSDAY|FRIDAY");
         System.out.print((char) 27 + "[31m|SATURDAY" + (char) 27 + "[0m");
-        System.out.println((char) 27 + "[31m|Sunday" + (char) 27 + "[0m");
+        System.out.println((char) 27 + "[31m|SUNDAY" + (char) 27 + "[0m");
         System.out.println("____________________________________________________________");
-        for(int i=1;i<= dayInMonth;i++){
-            if(i==8 || i==15 || i==22 || i==29)
-                System.out.println();
-            if(i==6 || i==7 || i==13 || i==14 || i==20 || i==21 || i==27 || i==28 || i==34)
-                System.out.printf((char) 27 + "[31m%8d " + (char) 27 + "[0m",i);
-            else System.out.printf("%8d", i);
+        for(int i=0;i< 6;i++){
+            for (int j = 0; j <7 ; j++) {
+                if(j==5 || j==6 )
+                    if(a[i][j]==day)System.out.printf((char) 27 + "[32m%8d " + (char) 27 + "[0m",a[i][j]);
+                    else System.out.printf((char) 27 + "[31m%8d " + (char) 27 + "[0m",a[i][j]);
+                else System.out.printf("%8d", a[i][j]);
 
+            }
+            System.out.println();
         }
     }
+
+    private static void print(int[][] a, int dayOfWeek, int dayInMonth) {
+        int number=1;
+        for (int i = dayOfWeek-1; i <7 ; i++) {
+            a[0][i]=number;
+            number++;
+        }
+        for (int i = 1; i <6 ; i++) {
+            for ( int j = 0; j <7 ; j++) {
+                a[i][j]=number;
+                number++;
+                if(number==dayInMonth+1)
+                    return;
+            }
+        }
+    }
+
 
     private static int howDayInMonth(int year, int month, int day) {
         Calendar myCalendar = (Calendar) Calendar.getInstance().clone();

@@ -12,12 +12,6 @@ import java.util.Calendar;
 public class Main {
     public static void main(String[] args) throws IOException {
         int[][] a = new int[6][7];
-//        for (int i = 0; i < 5; i++) {
-//            for (int j = 0; j <6 ; j++) {
-//                a[i][j]=0;
-//            }
-//        }
-
 
         //задаем год,месяц,время
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));

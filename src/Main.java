@@ -1,10 +1,7 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Calendar;
 
 /**
  * Created by Вадимка on 16.07.2016.
@@ -13,16 +10,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         int[][] a = new int[6][7];
 
-        //задаем год,месяц,время
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        //Указать нужный год, месяц, день. Если хотите просмотреть календарь на текущий месяц и узнать, какой сегодня день, то оставте поля с '0'
+        int year=2016;
+        int month=2;//от 1 до 12
+        int day=3;//от 1 до 31
+
+        //если поля с '0' в них записывается текущая дата
         LocalDate today = LocalDate.now();
-        System.out.println("Введите год, месяц и день, на которые хотите увидеть календарь, если хотите увидеть календарь текущего времени, просто, заполните поля '0'");
-        System.out.println("Введите год (прим.2016): ");
-        int year = Integer.parseInt(input.readLine());
-        System.out.println("Введите месяц(от 1 до 12): ");
-        int month = Integer.parseInt(input.readLine());
-        System.out.println("Введите день(от 1 до 31 учитывая количество дней в каждом месяце): ");
-        int day = Integer.parseInt(input.readLine());
         if(year == 0 && month==0&&day ==0){
             year=today.getYear();
             month=today.getMonthValue();
@@ -44,7 +38,6 @@ public class Main {
     }
 
     private static void conclusion(int[][] a, int day) {
-        String str = "";
         System.out.println("____________________________");
         System.out.print("|MON|TUE|WED|THU|FRI");
         System.out.print((char) 27 + "[31m|SAT" + (char) 27 + "[0m");
@@ -85,11 +78,8 @@ public class Main {
 
 
     private static int howDayInMonth(int year, int month, int day) {
-        Calendar myCalendar = (Calendar) Calendar.getInstance().clone();
-        myCalendar.set(year, month,day);
-        int max_date = myCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        System.out.println(max_date);
-        return max_date;
+        int allDay = LocalDate.of(year,month,day).lengthOfMonth();
+        return allDay;
     }
 
     private static int getDayOfWeek(LocalDate specificDate) {

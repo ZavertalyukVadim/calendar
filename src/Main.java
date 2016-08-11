@@ -44,18 +44,23 @@ public class Main {
     }
 
     private static void conclusion(int[][] a, int day) {
-        System.out.println("____________________________________________________________");
-        System.out.print("|MONDAY| TUESDAY| WEDNESDAY|THURSDAY|FRIDAY");
-        System.out.print((char) 27 + "[31m|SATURDAY" + (char) 27 + "[0m");
-        System.out.println((char) 27 + "[31m|SUNDAY" + (char) 27 + "[0m");
-        System.out.println("____________________________________________________________");
+        String str = "";
+        System.out.println("____________________________");
+        System.out.print("|MON|TUE|WED|THU|FRI");
+        System.out.print((char) 27 + "[31m|SAT" + (char) 27 + "[0m");
+        System.out.println((char) 27 + "[31m|SUN" + (char) 27 + "[0m");
+        System.out.println("____________________________");
         for(int i=0;i< 6;i++){
             for (int j = 0; j <7 ; j++) {
-                if(j==5 || j==6 )
-                    if(a[i][j]==day)System.out.printf((char) 27 + "[32m%8d " + (char) 27 + "[0m",a[i][j]);
-                    else System.out.printf((char) 27 + "[31m%8d " + (char) 27 + "[0m",a[i][j]);
-                else    if(a[i][j]==day)System.out.printf((char) 27 + "[32m%8d " + (char) 27 + "[0m",a[i][j]);
-                else    System.out.printf("%8d", a[i][j]);
+                    if(a[i][j]==0){
+                        System.out.print("    ");
+                        continue;
+                    }
+                    if (j == 5 || j == 6)
+                        if (a[i][j] == day) System.out.printf((char) 27 + "[32m%4d" + (char) 27 + "[0m", a[i][j]);
+                        else System.out.printf((char) 27 + "[31m%4d" + (char) 27 + "[0m", a[i][j]);
+                    else if (a[i][j] == day) System.out.printf((char) 27 + "[32m%4d" + (char) 27 + "[0m", a[i][j]);
+                    else System.out.printf("%4d", a[i][j]);
 
             }
             System.out.println();

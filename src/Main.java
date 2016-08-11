@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -86,30 +85,8 @@ public class Main {
     }
 
     private static int getDayOfWeek(LocalDate specificDate) {
-        DayOfWeek dayOfWeek = specificDate.withDayOfMonth(1).getDayOfWeek();
-        int dayForStart=0;
-        if (dayOfWeek.toString() == "MONDAY"){
-            dayForStart=1;
-        }
-        if (dayOfWeek.toString() == "TUESDAY"){
-            dayForStart=2;
-        }
-        if (dayOfWeek.toString() == "WEDNESDAY"){
-            dayForStart=3;
-        }
-        if (dayOfWeek.toString() == "THURSDAY"){
-            dayForStart=4;
-        }
-        if (dayOfWeek.toString() == "FRIDAY"){
-            dayForStart=5;
-        }
-        if (dayOfWeek.toString() == "SATURDAY"){
-            dayForStart=6;
-        }
-        if (dayOfWeek.toString() == "SUNDAY"){
-            dayForStart=7;
-        }
-        return dayForStart;
+        Integer dayOfWeek = specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
+        return dayOfWeek;
     }
 
 }

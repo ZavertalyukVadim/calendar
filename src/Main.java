@@ -9,15 +9,18 @@ import java.time.Month;
 public class Main {
     public static void main(String[] args) throws IOException {
         int[][] a = new int[6][7];
+        int year;
+        int month;
+        int day;
 
-        //Указать нужный год, месяц, день. Если хотите просмотреть календарь на текущий месяц и узнать, какой сегодня день, то оставте поля с '0'
-        int year=2016;
-        int month=2;//от 1 до 12
-        int day=3;//от 1 до 31
-
-        //если поля с '0' в них записывается текущая дата
         LocalDate today = LocalDate.now();
-        if(year == 0 && month==0&&day ==0){
+        //Если приходит дата, она записывается в переменные, если нет, то в записывается текущая дата
+        if (args.length>0) {
+            year = Integer.parseInt(args[0]);
+            month = Integer.parseInt(args[1]);//от 1 до 12
+            day = Integer.parseInt(args[2]);//от 1 до 31
+        }
+        else {
             year=today.getYear();
             month=today.getMonthValue();
             day=today.getDayOfMonth();

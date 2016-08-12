@@ -16,8 +16,8 @@ public class Main {
         //Если приходит дата, она записывается в переменные, если нет, то в записывается текущая дата
         if (args.length>0) {
             year = Integer.parseInt(args[0]);
-            month = Integer.parseInt(args[1]);//от 1 до 12
-            day = Integer.parseInt(args[2]);//от 1 до 31
+            month = Integer.parseInt(args[1]);
+            day = Integer.parseInt(args[2]);
         }
         else {
             year=today.getYear();
@@ -39,6 +39,7 @@ public class Main {
         conclusion(a, day);
     }
 
+    //Вывод календаря
     private static void conclusion(int[][] a, int day) {
         System.out.println("____________________________");
         System.out.print("|MON|TUE|WED|THU|FRI");
@@ -61,7 +62,7 @@ public class Main {
             System.out.println();
         }
     }
-
+    //формирование массива с днями месяца
     private static void enteringIntoAnArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number=1;
         for (int i = dayOfWeek-1; i <7 ; i++) {
@@ -78,12 +79,12 @@ public class Main {
         }
     }
 
-
+    //Узнаем количество дней в месяце
     private static int howDayInMonth(int year, int month, int day) {
         int allDay = LocalDate.of(year,month,day).lengthOfMonth();
         return allDay;
     }
-
+   //Узнаем день, с которого начинается месяц
     private static int getDayOfWeek(LocalDate specificDate) {
         Integer dayOfWeek = specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
         return dayOfWeek;

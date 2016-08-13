@@ -33,15 +33,11 @@ public class Main {
 
     private static LocalDate getDate(String[] args) {
         LocalDate today = LocalDate.now();
-        int year;
-        int month;
-        int day;
-        //Если приходит дата, она записывается в переменные, если нет, то в записывается текущая дата
         if (args.length > 0) {
             try {
-                year = Integer.parseInt(args[0]);
-                month = Integer.parseInt(args[1]);
-                day = Integer.parseInt(args[2]);
+                int year = Integer.parseInt(args[0]);
+                int month = Integer.parseInt(args[1]);
+                int day = Integer.parseInt(args[2]);
                 return LocalDate.of(year, Month.of(month), day);
             } catch (Exception e) {
                 System.out.println("Pas specific date in arguments using following format: YYYY MM DD");

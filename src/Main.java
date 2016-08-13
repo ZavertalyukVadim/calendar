@@ -6,9 +6,9 @@ import java.time.Month;
  * Created by Вадимка on 16.07.2016.
  */
 public class Main {
-    public static final int DAYS_IN_WEEK = 6;
-    public static final int MAX_WEEKS_IN_MONTH = 7;
-
+    public static final int DAYS_IN_WEEK = 7;
+    public static final int MAX_WEEKS_IN_MONTH = 6;
+    public static final String GREEN_TEXT_START_TOKEN =(char) 27 + "[32m%4d" + (char) 27 + "[0m" ;
     public static void main(String[] args) throws IOException {
 
         int[][] a = new int[6][7];
@@ -38,9 +38,7 @@ public class Main {
             month = Integer.parseInt(args[1]);
             day = Integer.parseInt(args[2]);
         } else {
-            year = today.getYear();
-            month = today.getMonthValue();
-            day = today.getDayOfMonth();
+            return today;
         }
 
         return LocalDate.of(year, Month.of(month), day);
@@ -53,16 +51,17 @@ public class Main {
         System.out.print((char) 27 + "[31m|SAT" + (char) 27 + "[0m");
         System.out.println((char) 27 + "[31m|SUN" + (char) 27 + "[0m");
         System.out.println("____________________________");
-        for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            for (int j = 0; j < MAX_WEEKS_IN_MONTH; j++) {
+        for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
+            for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 if (a[i][j] == 0) {
                     System.out.print("    ");
                     continue;
                 }
                 if (j == 5 || j == 6)
-                    if (a[i][j] == day) System.out.printf((char) 27 + "[32m%4d" + (char) 27 + "[0m", a[i][j]);
-                    else System.out.printf((char) 27 + "[31m%4d" + (char) 27 + "[0m", a[i][j]);
-                else if (a[i][j] == day) System.out.printf((char) 27 + "[32m%4d" + (char) 27 + "[0m", a[i][j]);
+//                    if (a[i][j] == day) System.out.printf(GREEN_TEXT_START_TOKEN, a[i][j]);
+//                    else
+                System.out.printf((char) 27 + "[31m%4d" + (char) 27 + "[0m", a[i][j]);
+                else if (a[i][j] == day) System.out.printf(GREEN_TEXT_START_TOKEN, a[i][j]);
                 else System.out.printf("%4d", a[i][j]);
 
             }
@@ -73,12 +72,12 @@ public class Main {
     //формирование массива с днями месяца
     private static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number = 1;
-        for (int i = dayOfWeek - 1; i < MAX_WEEKS_IN_MONTH; i++) {
+        for (int i = dayOfWeek - 1; i < DAYS_IN_WEEK; i++) {
             a[0][i] = number;
             number++;
         }
-        for (int i = 1; i < DAYS_IN_WEEK; i++) {
-            for (int j = 0; j < MAX_WEEKS_IN_MONTH; j++) {
+        for (int i = 1; i < MAX_WEEKS_IN_MONTH; i++) {
+            for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 a[i][j] = number;
                 number++;
                 if (number == dayInMonth + 1)

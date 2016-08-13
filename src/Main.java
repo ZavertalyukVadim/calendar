@@ -8,10 +8,16 @@ import java.time.Month;
 public class Main {
     public static final int DAYS_IN_WEEK = 7;
     public static final int MAX_WEEKS_IN_MONTH = 6;
-    public static final String GREEN_TEXT_CURRENT_TOKEN = (char) 27 + "[32m%4d" + (char) 27 + "[0m";
-    public static final String RED_TEXT_WEEKEND_TOKEN = (char) 27 + "[31m%4d" + (char) 27 + "[0m";
-    public static final String RED_TEXT_SATURDAY_TOKEN = (char) 27 + "[31m|SAT" + (char) 27 + "[0m";
-    public static final String RED_TEXT_SUNDAY_TOKEN = (char) 27 + "[31m|SUN" + (char) 27 + "[0m";
+    public static final int SATURDAY_INDEX = 5;
+    public static final int SUNDAY_INDEX = 6;
+//    public static final String GREEN_TEXT_CURRENT_TOKEN = (char) 27 + "[32m%4d" + (char) 27 + "[0m";
+//    public static final String RED_TEXT_WEEKEND_TOKEN = (char) 27 + "[31m%4d" + (char) 27 + "[0m";
+//    public static final String RED_TEXT_SATURDAY_TOKEN = (char) 27 + "[31m|SAT" + (char) 27 + "[0m";
+//    public static final String RED_TEXT_SUNDAY_TOKEN = (char) 27 + "[31m|SUN" + (char) 27 + "[0m";
+    public static final String RED_TEXT_START_TOKEN = (char) 27 + "[31m" ;
+    public static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
+    public static final String GREEN_TEXT_START_TOKEN = (char) 27 + "[32m" ;
+    public static final String GREEN_TEXT_END_TOKEN = (char) 27 + "[0m";
 
     public static void main(String[] args) throws IOException {
 
@@ -23,8 +29,8 @@ public class Main {
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         //узнаем количество дней в заданом месяце
-        int dayInMonth = howDayInMonth(specificDate.getYear(), specificDate.getMonthValue(), specificDate.getDayOfMonth());
-        fillInCalendarArray(a, firstDayWeekIndex, dayInMonth);
+        int monthLength = specificDate.lengthOfMonth();
+        fillInCalendarArray(a, firstDayWeekIndex, monthLength);
 
         // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
@@ -50,26 +56,32 @@ public class Main {
 
     //Вывод календаря
     private static void printCalendarArray(int[][] a, int day) {
-        System.out.println("____________________________");
-        System.out.print("|MON|TUE|WED|THU|FRI");
-        System.out.print(RED_TEXT_SATURDAY_TOKEN);
-        System.out.println(RED_TEXT_SUNDAY_TOKEN);
-        System.out.println("____________________________");
+        printCalendarHeader();
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 if (a[i][j] == 0) {
                     System.out.print("    ");
                     continue;
                 }
-                if (j == 5 || j == 6)
-                    if (a[i][j] == day) System.out.printf(GREEN_TEXT_CURRENT_TOKEN, a[i][j]);
-                    else System.out.printf(RED_TEXT_WEEKEND_TOKEN, a[i][j]);
-                else if (a[i][j] == day) System.out.printf(GREEN_TEXT_CURRENT_TOKEN, a[i][j]);
-                else System.out.printf("%4d", a[i][j]);
-
+                if (a[i][j] == day)
+                    System.out.printf(GREEN_TEXT_START_TOKEN + "%4d" + GREEN_TEXT_END_TOKEN, a[i][j]);
+                else if (j == SATURDAY_INDEX || j == SUNDAY_INDEX)
+                    System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
+                else
+                    System.out.printf("%4d", a[i][j]);
             }
             System.out.println();
         }
+    }
+
+    private static void printCalendarHeader() {
+        System.out.println("____________________________");
+        System.out.print("|MON|TUE|WED|THU|FRI|");
+        System.out.print(RED_TEXT_START_TOKEN + "SAT" + RED_TEXT_END_TOKEN);
+        System.out.print("|");
+        System.out.print(RED_TEXT_START_TOKEN + "SUN" + RED_TEXT_END_TOKEN);
+        System.out.println();
+        System.out.println("____________________________");
     }
 
     //формирование массива с днями месяца
@@ -87,12 +99,6 @@ public class Main {
                     return;
             }
         }
-    }
-
-    //Узнаем количество дней в месяце
-    private static int howDayInMonth(int year, int month, int day) {
-        int allDay = LocalDate.of(year, month, day).lengthOfMonth();
-        return allDay;
     }
 
     //Узнаем день, с которого начинается месяц

@@ -43,8 +43,6 @@ public class Main {
                 System.out.println("Pas specific date in arguments using following format: YYYY MM DD");
                 System.exit(1);
             }
-        } else {
-            return today;
         }
         return today;
     }

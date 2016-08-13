@@ -10,10 +10,6 @@ public class Main {
     public static final int MAX_WEEKS_IN_MONTH = 6;
     public static final int SATURDAY_INDEX = 5;
     public static final int SUNDAY_INDEX = 6;
-//    public static final String GREEN_TEXT_CURRENT_TOKEN = (char) 27 + "[32m%4d" + (char) 27 + "[0m";
-//    public static final String RED_TEXT_WEEKEND_TOKEN = (char) 27 + "[31m%4d" + (char) 27 + "[0m";
-//    public static final String RED_TEXT_SATURDAY_TOKEN = (char) 27 + "[31m|SAT" + (char) 27 + "[0m";
-//    public static final String RED_TEXT_SUNDAY_TOKEN = (char) 27 + "[31m|SUN" + (char) 27 + "[0m";
     public static final String RED_TEXT_START_TOKEN = (char) 27 + "[31m" ;
     public static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
     public static final String GREEN_TEXT_START_TOKEN = (char) 27 + "[32m" ;

@@ -38,14 +38,21 @@ public class Main {
         int day;
         //Если приходит дата, она записывается в переменные, если нет, то в записывается текущая дата
         if (args.length > 0) {
-            year = Integer.parseInt(args[0]);
-            month = Integer.parseInt(args[1]);
-            day = Integer.parseInt(args[2]);
-            return LocalDate.of(year, Month.of(month), day);
+            try {
+                year = Integer.parseInt(args[0]);
+                month = Integer.parseInt(args[1]);
+                day = Integer.parseInt(args[2]);
+                return LocalDate.of(year, Month.of(month), day);
+            } catch (Exception e) {
+                System.out.println("Pas specific date in arguments using following format: YYYY MM DD");
+                System.exit(1);
+            }
         } else {
             return today;
         }
+        return today;
     }
+
 
     //Вывод календаря
     private static void printCalendarArray(int[][] a, int day) {

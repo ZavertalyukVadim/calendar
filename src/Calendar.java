@@ -5,20 +5,19 @@ import java.time.Month;
 /**
  * Created by Вадимка on 16.07.2016.
  */
-public class Main {
-    public static final int DAYS_IN_WEEK = 7;
-    public static final int MAX_WEEKS_IN_MONTH = 6;
-    public static final int SATURDAY_INDEX = 5;
-    public static final int SUNDAY_INDEX = 6;
-    public static final String RED_TEXT_START_TOKEN = (char) 27 + "[31m" ;
-    public static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
-    public static final String GREEN_TEXT_START_TOKEN = (char) 27 + "[32m" ;
-    public static final String GREEN_TEXT_END_TOKEN = (char) 27 + "[0m";
+public class Calendar {
+    private static final int DAYS_IN_WEEK = 7;
+    private static final int MAX_WEEKS_IN_MONTH = 6;
+    private static final int SATURDAY_INDEX = 5;
+    private static final int SUNDAY_INDEX = 6;
+    private static final String RED_TEXT_START_TOKEN = (char) 27 + "[31m";
+    private static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
+    private static final String GREEN_TEXT_START_TOKEN = (char) 27 + "[32m";
+    private static final String GREEN_TEXT_END_TOKEN = (char) 27 + "[0m";
 
     public static void main(String[] args) throws IOException {
 
         int[][] a = new int[6][7];
-
         LocalDate specificDate = getDate(args);
 
         //с какого дня начинаеться месяц
@@ -26,6 +25,7 @@ public class Main {
 
         //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
+
         fillInCalendarArray(a, firstDayWeekIndex, monthLength);
 
         // /выводим введенное дату,время
@@ -33,7 +33,7 @@ public class Main {
         printCalendarArray(a, specificDate.getDayOfMonth());
     }
 
-    private static LocalDate getDate(String[] args) {
+    static LocalDate getDate(String[] args) {
         LocalDate today = LocalDate.now();
         if (args.length > 0) {
             try {
@@ -51,7 +51,7 @@ public class Main {
 
 
     //Вывод календаря
-    private static void printCalendarArray(int[][] a, int day) {
+    static void printCalendarArray(int[][] a, int day) {
         printCalendarHeader();
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
@@ -70,18 +70,16 @@ public class Main {
         }
     }
 
-    private static void printCalendarHeader() {
-        System.out.println("____________________________");
-        System.out.print("|MON|TUE|WED|THU|FRI|");
+    public static void printCalendarHeader() {
+        System.out.print(" MON  TUE WED THU FRI ");
         System.out.print(RED_TEXT_START_TOKEN + "SAT" + RED_TEXT_END_TOKEN);
-        System.out.print("|");
+        System.out.print(" ");
         System.out.print(RED_TEXT_START_TOKEN + "SUN" + RED_TEXT_END_TOKEN);
         System.out.println();
-        System.out.println("____________________________");
     }
 
     //формирование массива с днями месяца
-    private static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
+    static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number = 1;
         for (int i = dayOfWeek - 1; i < DAYS_IN_WEEK; i++) {
             a[0][i] = number;
@@ -98,7 +96,7 @@ public class Main {
     }
 
     //Узнаем день, с которого начинается месяц
-    private static int weekIndexOfFirstDay(LocalDate specificDate) {
+    static int weekIndexOfFirstDay(LocalDate specificDate) {
         Integer firstDayWeekIndex = specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
         return firstDayWeekIndex;
     }

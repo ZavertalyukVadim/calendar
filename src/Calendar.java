@@ -1,8 +1,8 @@
 import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.time.temporal.WeekFields;
 import java.util.Locale;
 
 /**
@@ -25,10 +25,12 @@ public class Calendar {
 //        String str = specificDate.getMonth();
         //с какого дня начинаеться месяц
 
+        String str = "FRANCE";
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         System.out.println("Первый день =" + firstDayWeekIndex);
         System.out.println();
+//        System.out.println(WeekFields.of());
 //        DayOfWeek.of(1).;
         System.out.println("_________________________________");
         //узнаем количество дней в заданом месяце
@@ -62,6 +64,7 @@ public class Calendar {
     //Вывод календаря
     static void printCalendarArray(int[][] a, int day) {
 //        printCalendarHeader();
+
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 if (a[i][j] == 0) {
@@ -80,13 +83,43 @@ public class Calendar {
     }
 
     public static void printCalendarHeader() {
-        for (int i = 1; i < 8; i++) {
-            if (i == 6 || i == 7) {
-                System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, DayOfWeek.of(i).getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase()));
-                continue;
-            }
+        Locale locale =Locale.UK;
+        System.out.println(locale);
+        WeekFields.of(locale).getFirstDayOfWeek();
 
-            System.out.print(String.format("%4s", DayOfWeek.of(i).getDisplayName(TextStyle.SHORT,Locale.ENGLISH).toUpperCase()));
+        for (int i = 0; i < 7; i++) {
+            if(locale.equals(Locale.ENGLISH)){
+                if (i==0||i==6){
+                    System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN,WeekFields.of(locale)
+                            .getFirstDayOfWeek()
+                            .plus(i)
+                            .getDisplayName(TextStyle.SHORT,locale)
+                            .toUpperCase()));
+                }
+                else {
+                    System.out.print(String.format("%4s" ,WeekFields.of(locale)
+                            .getFirstDayOfWeek()
+                            .plus(i)
+                            .getDisplayName(TextStyle.SHORT,locale)
+                            .toUpperCase()));
+                }
+            }
+            if(locale!=locale.ENGLISH){
+                if (i==5||i==6){
+                    System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN,WeekFields.of(locale)
+                            .getFirstDayOfWeek()
+                            .plus(i)
+                            .getDisplayName(TextStyle.SHORT,locale)
+                            .toUpperCase()));
+                }
+                else {
+                    System.out.print(String.format("%4s" ,WeekFields.of(locale)
+                            .getFirstDayOfWeek()
+                            .plus(i)
+                            .getDisplayName(TextStyle.SHORT,locale)
+                            .toUpperCase()));
+                }
+            }
         }
         System.out.println();
     }

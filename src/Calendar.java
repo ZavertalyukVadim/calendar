@@ -1,6 +1,9 @@
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 /**
  * Created by Вадимка on 16.07.2016.
@@ -16,13 +19,18 @@ public class Calendar {
     private static final String GREEN_TEXT_END_TOKEN = (char) 27 + "[0m";
 
     public static void main(String[] args) throws IOException {
-
         int[][] a = new int[6][7];
         LocalDate specificDate = getDate(args);
-
+        String firstDayOfWeek;
+//        String str = specificDate.getMonth();
         //с какого дня начинаеться месяц
+
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
+        System.out.println("Первый день =" + firstDayWeekIndex);
+        System.out.println();
+//        DayOfWeek.of(1).;
+        System.out.println("_________________________________");
         //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
 
@@ -30,6 +38,7 @@ public class Calendar {
 
         // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
+        printCalendarHeader();
         printCalendarArray(a, specificDate.getDayOfMonth());
     }
 
@@ -52,7 +61,7 @@ public class Calendar {
 
     //Вывод календаря
     static void printCalendarArray(int[][] a, int day) {
-        printCalendarHeader();
+//        printCalendarHeader();
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 if (a[i][j] == 0) {
@@ -71,10 +80,14 @@ public class Calendar {
     }
 
     public static void printCalendarHeader() {
-        System.out.print(" MON  TUE WED THU FRI ");
-        System.out.print(RED_TEXT_START_TOKEN + "SAT" + RED_TEXT_END_TOKEN);
-        System.out.print(" ");
-        System.out.print(RED_TEXT_START_TOKEN + "SUN" + RED_TEXT_END_TOKEN);
+        for (int i = 1; i < 8; i++) {
+            if (i == 6 || i == 7) {
+                System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, DayOfWeek.of(i).getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase()));
+                continue;
+            }
+
+            System.out.print(String.format("%4s", DayOfWeek.of(i).getDisplayName(TextStyle.SHORT,Locale.ENGLISH).toUpperCase()));
+        }
         System.out.println();
     }
 

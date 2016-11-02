@@ -13,6 +13,8 @@ public class Calendar {
     private static final int MAX_WEEKS_IN_MONTH = 6;
     private static final int SATURDAY_INDEX = 5;
     private static final int SUNDAY_INDEX = 6;
+    private static final int SATURDAY_INDEX_FOR_ENGLAND = 6;
+    private static final int SUNDAY_INDEX_FOR_ENGLAND = 0;
     private static final String RED_TEXT_START_TOKEN = (char) 27 + "[31m";
     private static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
     private static final String GREEN_TEXT_START_TOKEN = (char) 27 + "[32m";
@@ -21,27 +23,28 @@ public class Calendar {
     public static void main(String[] args) throws IOException {
         int[][] a = new int[6][7];
         LocalDate specificDate = getDate(args);
-        String firstDayOfWeek;
-//        String str = specificDate.getMonth();
-        //с какого дня начинаеться месяц
-
-        String str = "FRANCE";
+        //Выбираем Локацию
+        Locale locale =Locale.ENGLISH;
+        boolean flag;
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
-        System.out.println("Первый день =" + firstDayWeekIndex);
-        System.out.println();
-//        System.out.println(WeekFields.of());
-//        DayOfWeek.of(1).;
-        System.out.println("_________________________________");
         //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
+        if(locale.equals(Locale.ENGLISH)){
+            flag=true;
+            fillInCalendarArray(a, firstDayWeekIndex, monthLength);
+        }
+        else{
+            flag=false;
+            fillInCalendarArray(a, firstDayWeekIndex, monthLength);
+        }
 
-        fillInCalendarArray(a, firstDayWeekIndex, monthLength);
+
 
         // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
-        printCalendarHeader();
-        printCalendarArray(a, specificDate.getDayOfMonth());
+        printCalendarHeader(locale);
+                printCalendarArray(a, specificDate.getDayOfMonth(),locale);
     }
 
     static LocalDate getDate(String[] args) {
@@ -62,9 +65,7 @@ public class Calendar {
 
 
     //Вывод календаря
-    static void printCalendarArray(int[][] a, int day) {
-//        printCalendarHeader();
-
+    static void printCalendarArray(int[][] a, int day, Locale locale) {
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 if (a[i][j] == 0) {
@@ -73,8 +74,15 @@ public class Calendar {
                 }
                 if (a[i][j] == day)
                     System.out.printf(GREEN_TEXT_START_TOKEN + "%4d" + GREEN_TEXT_END_TOKEN, a[i][j]);
-                else if (j == SATURDAY_INDEX || j == SUNDAY_INDEX)
+                else if (locale.equals(Locale.ENGLISH)){
+                    if(j == SATURDAY_INDEX_FOR_ENGLAND || j == SUNDAY_INDEX_FOR_ENGLAND)
                     System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
+                }
+//                else if (locale!=locale.ENGLISH){
+//                    if(j == SATURDAY_INDEX || j == SUNDAY_INDEX)
+//                    System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
+//                }
+
                 else
                     System.out.printf("%4d", a[i][j]);
             }
@@ -82,11 +90,7 @@ public class Calendar {
         }
     }
 
-    public static void printCalendarHeader() {
-        Locale locale =Locale.UK;
-        System.out.println(locale);
-        WeekFields.of(locale).getFirstDayOfWeek();
-
+    public static void printCalendarHeader(Locale locale) {
         for (int i = 0; i < 7; i++) {
             if(locale.equals(Locale.ENGLISH)){
                 if (i==0||i==6){
@@ -140,6 +144,7 @@ public class Calendar {
             }
         }
     }
+
 
     //Узнаем день, с которого начинается месяц
     static int weekIndexOfFirstDay(LocalDate specificDate) {

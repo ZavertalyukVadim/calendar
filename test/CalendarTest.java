@@ -63,7 +63,7 @@ public class CalendarTest {
             }
         }
 
-        Calendar.printCalendarArray(a,dayNow);
+//        Calendar.printCalendarArray(a,dayNow);
 
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++,day++) {
@@ -99,7 +99,7 @@ public class CalendarTest {
         StringBuilder expected = new StringBuilder();
         expected.append(" MON  TUE WED THU FRI " + RED_TEXT_START_TOKEN + "SAT" + RED_TEXT_END_TOKEN + " " + RED_TEXT_START_TOKEN + "SUN" + RED_TEXT_END_TOKEN + "\n");
 
-        Calendar.printCalendarHeader();
+//        Calendar.printCalendarHeader();
 
         assertThat(expected.toString(), equalTo(outContent.toString()));
     }

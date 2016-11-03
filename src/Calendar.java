@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Created by Вадимка on 16.07.2016.
  */
-public class Calendar extends PrintCalendar {
+public class Calendar {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;
     private static final int SATURDAY_INDEX = 5;

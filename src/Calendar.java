@@ -10,7 +10,6 @@ import java.time.Month;
 public class Calendar {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;
-    private static Print print = new Print();
 
     public static void main(String[] args) throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -19,7 +18,6 @@ public class Calendar {
         LocalDate specificDate = getDate(args);
         System.out.println("С какого дня начинается неделя (1- пн, 7 - ВС) = ");
         int weekStartWithThisDayInt = Integer.parseInt(input.readLine());
-//        weekStartWithThisDayInt--;
         int[] weekends = {0, 0, 0, 0, 0, 0, 0};
         System.out.println("Введите '1', когда хотите, что бы этот день был выходным, а когда рабочим - 0''");
         for (int i = 0; i < weekends.length; i++) {
@@ -37,8 +35,8 @@ public class Calendar {
 
         // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
-        print.printCalendarHeader(weekends, weekStartWithThisDayInt);
-        print.printCalendarArray(a, specificDate.getDayOfMonth(), weekends);
+        Print.printCalendarHeader(weekends, weekStartWithThisDayInt);
+        Print.printCalendarArray(a, specificDate.getDayOfMonth(), weekends);
     }
 
    private static LocalDate getDate(String[] args) {

@@ -14,7 +14,7 @@ class Print {
     private static final String RED_TEXT_START_TOKEN = (char) 27 + "[31m";
     private static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
 
-    void printCalendarArray(int[][] a, int day, int[] weekends) {
+    static void printCalendarArray(int[][] a, int day, int[] weekends) {
 
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
@@ -34,7 +34,7 @@ class Print {
         }
     }
 
-    void printCalendarHeader(int[] weekends, int dayStartWithThisDate) {
+    static void printCalendarHeader(int[] weekends, int dayStartWithThisDate) {
         int j = 0;
         for (int i = dayStartWithThisDate; i < DAYS_IN_WEEK + dayStartWithThisDate; i++) {
             if (weekends[j] == 1) {

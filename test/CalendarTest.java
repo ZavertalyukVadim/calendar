@@ -1,7 +1,10 @@
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -34,59 +37,56 @@ public class CalendarTest {
     Calendar calendar = new Calendar();
     String[] strings = {"2016", "11", "2"};
 
-//    @Before
-//    public void setUpStreams() {
-//        System.setOut(new PrintStream(outContent));
-//        System.setErr(new PrintStream(errContent));
-//
-//
-//    }
-//
-//    @After
-//    public void cleanUpStreams() {
-//        System.setOut(null);
-//        System.setErr(null);
-//    }
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+
+
+    }
+
+    @After
+    public void cleanUpStreams() {
+        System.setOut(null);
+        System.setErr(null);
+    }
 
     @Test
-    public void ColorOfWeek() throws IOException {
+    public void ColorOfCurrentDay() throws IOException {
         StringBuilder expected = new StringBuilder();
         Formatter formatter = new Formatter(expected, Locale.US);
-
         int[][] a = new int[6][7];
         int day =1;
         int dayNow=9;
-
+        int[] weekends = {0, 0, 0, 0, 0, 0, 0};
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++,day++) {
                 a[i][j]=day;
             }
         }
-
-//        Calendar.printCalendarArray(a,dayNow);
-
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
-            for (int j = 0; j < DAYS_IN_WEEK; j++,day++) {
-//                expected.append("   ");
-                if (a[i][j] == dayNow) {
-                    formatter.format("  ");
+            for (int j = 0; j < DAYS_IN_WEEK; j++) {
+                if (a[i][j] == 0) {
+                    formatter.format("    ");
                     continue;
                 }
-                formatter.format("%4d",a[i][j]);
-
-//                    expected.append(GREEN_TEXT_START_TOKEN + "%4d" + GREEN_TEXT_END_TOKEN, a[i][j]);
+                if (a[i][j] == dayNow)
+                    formatter.format(GREEN_TEXT_START_TOKEN + "%4d" + GREEN_TEXT_END_TOKEN, a[i][j]);
+                else if (weekends[j] == 1)
+                    formatter.format(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
+                else {
+                    formatter.format("%4d", a[i][j]);
+                }
             }
             formatter.format("\n");
         }
 
 
 
-        for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
-            for (int j = 0; j < DAYS_IN_WEEK; j++,day++) {
-                System.out.print(a[i][j]);
-            }
-            System.out.println();
-        }
+
+        Print.printCalendarArray(a,dayNow,weekends);
+
+
 
 
 
@@ -96,10 +96,12 @@ public class CalendarTest {
 
     @Test
     public void CalendarHeader() {
+        int[] weekends = {1, 1, 0, 0, 0, 0, 0};
+        int weekStartWithThisDayInt = 2;
         StringBuilder expected = new StringBuilder();
         expected.append(" MON  TUE WED THU FRI " + RED_TEXT_START_TOKEN + "SAT" + RED_TEXT_END_TOKEN + " " + RED_TEXT_START_TOKEN + "SUN" + RED_TEXT_END_TOKEN + "\n");
 
-//        Calendar.printCalendarHeader();
+        Print.printCalendarHeader(weekends, weekStartWithThisDayInt);
 
         assertThat(expected.toString(), equalTo(outContent.toString()));
     }

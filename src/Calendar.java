@@ -14,24 +14,25 @@ public class Calendar {
     public static void main(String[] args) throws IOException {
         int[][] a = new int[6][7];
         LocalDate specificDate = getDate(args);
-        int[] weekends = {1,7};
-        String weekStartWithThisDay="SUN";
+        int weekStartWithThisDayInt=1;
+        int[] weekends = {0,1,1,0,1,0,0};
+
         //Выбираем Локацию
         Locale locale = Locale.UK;
-        int firstDayWeekIndex = weekIndexOfFirstDay(specificDate,weekStartWithThisDay);
+        int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
         //формируем массив
 //            fillInCalendarArray(a, firstDayWeekIndex + 1, monthLength);
 
-            fillInCalendarArray(a, firstDayWeekIndex, monthLength);
+        fillInCalendarArray(a, firstDayWeekIndex, monthLength);
 
 
         // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
-        print.printCalendarHeader(weekends,weekStartWithThisDay,locale);
-        print.printCalendarArray(a, specificDate.getDayOfMonth(),locale);
+        print.printCalendarHeader(weekends,locale,weekStartWithThisDayInt);
+        print.printCalendarArray(a, specificDate.getDayOfMonth(),locale,weekends);
     }
 
     static LocalDate getDate(String[] args) {
@@ -53,7 +54,7 @@ public class Calendar {
     //формирование массива с днями месяца
     static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number = 1;
-        for (int i = dayOfWeek - 1; i < DAYS_IN_WEEK; i++) {
+        for (int i = dayOfWeek - 2; i < DAYS_IN_WEEK; i++) {
             a[0][i] = number;
             number++;
         }
@@ -68,9 +69,7 @@ public class Calendar {
     }
 
     //Узнаем день, с которого начинается месяц
-    static int weekIndexOfFirstDay(LocalDate specificDate,String str) {
-//        Integer day = specificDate.w;
-//        System.out.println(specificDate.withDayOfMonth(1).getDayOfWeek());
+    static int weekIndexOfFirstDay(LocalDate specificDate) {
         Integer firstDayWeekIndex = specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
         System.out.println(firstDayWeekIndex);
         return firstDayWeekIndex;

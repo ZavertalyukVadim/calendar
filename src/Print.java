@@ -14,7 +14,7 @@ class Print {
     private static final String RED_TEXT_START_TOKEN = (char) 27 + "[31m";
     private static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
 
-    void printCalendarArray(int[][] a, int day, java.util.Locale locale) {
+    void printCalendarArray(int[][] a, int day, Locale locale) {
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 if (a[i][j] == 0) {
@@ -23,14 +23,14 @@ class Print {
                 }
                 if (a[i][j] == day)
                     System.out.printf(GREEN_TEXT_START_TOKEN + "%4d" + GREEN_TEXT_END_TOKEN, a[i][j]);
-                else if (locale.equals(Locale.ENGLISH)||locale.equals(Locale.CANADA)) {
+                else if (locale.equals(Locale.ENGLISH)||locale.equals(Locale.CANADA)) {///////////////////
                     if (j == SATURDAY_INDEX_FOR_ENGLAND || j == SUNDAY_INDEX_FOR_ENGLAND)
                         System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
                     else {
                         System.out.printf("%4d", a[i][j]);
                     }
                 } else if (locale != Locale.ENGLISH && locale != Locale.CANADA) {
-                    if (j == SATURDAY_INDEX || j == SUNDAY_INDEX)
+                    if (j == SATURDAY_INDEX || j == SUNDAY_INDEX)//////////////////
                         System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
                     else {
                         System.out.printf("%4d", a[i][j]);
@@ -41,9 +41,16 @@ class Print {
         }
     }
 
-    void printCalendarHeader(Locale locale) {
+    void printCalendarHeader(int [] mass, String weekStartWithThisDay,Locale locale) {
+        System.out.println();
+        System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, WeekFields.of(locale)
+                .getFirstDayOfWeek()));
+        System.out.println(        );
+        System.out.println();
+
+
         for (int i = 0; i < 7; i++) {
-            if (locale.equals(Locale.ENGLISH)||locale.equals(Locale.CANADA)) {
+            if (locale.equals(Locale.ENGLISH)||locale.equals(Locale.CANADA)) {/////////////////
                 if (i == 0 || i == 6) {
                     System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, WeekFields.of(locale)
                             .getFirstDayOfWeek()
@@ -58,7 +65,7 @@ class Print {
                             .toUpperCase()));
                 }
             }
-            if (locale != Locale.ENGLISH && locale != Locale.CANADA) {
+            if (locale != Locale.ENGLISH && locale != Locale.CANADA) {/////////////////////////
                 if (i == 5 || i == 6) {
                     System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, WeekFields.of(locale)
                             .getFirstDayOfWeek()

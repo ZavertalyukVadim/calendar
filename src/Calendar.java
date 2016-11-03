@@ -19,8 +19,11 @@ public class Calendar {
         System.out.println("С какого дня начинается неделя (1- пн, 7 - ВС) = ");
         int weekStartWithThisDayInt = Integer.parseInt(input.readLine());
         weekStartWithThisDayInt--;
-        int[] weekends = {0, 1, 1, 0, 1, 0, 0};
-
+        int[] weekends = {0, 0, 0, 0, 0, 0, 0};
+        System.out.println("Введите '1', когда хотите, что бы этот день был выходным, а когда рабочим - 0''");
+        for (int i = 0; i < weekends.length; i++) {
+            weekends[i]= Integer.parseInt(input.readLine());
+        }
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         //узнаем количество дней в заданом месяце

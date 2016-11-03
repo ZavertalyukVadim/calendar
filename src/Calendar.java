@@ -14,8 +14,8 @@ public class Calendar {
     public static void main(String[] args) throws IOException {
         int[][] a = new int[6][7];
         LocalDate specificDate = getDate(args);
-        int weekStartWithThisDayInt=1;
-        int[] weekends = {0,1,1,0,1,0,0};
+        int weekStartWithThisDayInt = 1;
+        int[] weekends = {0, 1, 1, 0, 1, 0, 0};
 
         //Выбираем Локацию
         Locale locale = Locale.UK;
@@ -23,16 +23,15 @@ public class Calendar {
 
         //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
-        //формируем массив
-//            fillInCalendarArray(a, firstDayWeekIndex + 1, monthLength);
 
+        //формируем массив
         fillInCalendarArray(a, firstDayWeekIndex, monthLength);
 
 
         // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
-        print.printCalendarHeader(weekends,locale,weekStartWithThisDayInt);
-        print.printCalendarArray(a, specificDate.getDayOfMonth(),locale,weekends);
+        print.printCalendarHeader(weekends, weekStartWithThisDayInt);
+        print.printCalendarArray(a, specificDate.getDayOfMonth(), weekends);
     }
 
     static LocalDate getDate(String[] args) {
@@ -71,7 +70,6 @@ public class Calendar {
     //Узнаем день, с которого начинается месяц
     static int weekIndexOfFirstDay(LocalDate specificDate) {
         Integer firstDayWeekIndex = specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
-        System.out.println(firstDayWeekIndex);
         return firstDayWeekIndex;
     }
 

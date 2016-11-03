@@ -5,10 +5,11 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.format.TextStyle;
+import java.time.temporal.WeekFields;
 import java.util.Formatter;
 import java.util.Locale;
 
-import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -20,8 +21,6 @@ import static org.hamcrest.Matchers.is;
 public class CalendarTest {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;
-    private static final int SATURDAY_INDEX = 5;
-    private static final int SUNDAY_INDEX = 6;
     private static final String FORMAT = "%4s";
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
@@ -29,13 +28,6 @@ public class CalendarTest {
     private static final String RED_TEXT_END_TOKEN = (char) 27 + "[0m";
     private static final String GREEN_TEXT_START_TOKEN = (char) 27 + "[32m";
     private static final String GREEN_TEXT_END_TOKEN = (char) 27 + "[0m";
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String HELLO = "hello";
-    private static String str1 = " MON  TUE WED";
-    private static String str2 = " THU FRI";
-    Calendar calendar = new Calendar();
-    String[] strings = {"2016", "11", "2"};
 
     @Before
     public void setUpStreams() {
@@ -56,12 +48,12 @@ public class CalendarTest {
         StringBuilder expected = new StringBuilder();
         Formatter formatter = new Formatter(expected, Locale.US);
         int[][] a = new int[6][7];
-        int day =1;
-        int dayNow=9;
+        int day = 1;
+        int dayNow = 9;
         int[] weekends = {0, 0, 0, 0, 0, 0, 0};
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
-            for (int j = 0; j < DAYS_IN_WEEK; j++,day++) {
-                a[i][j]=day;
+            for (int j = 0; j < DAYS_IN_WEEK; j++, day++) {
+                a[i][j] = day;
             }
         }
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
@@ -82,12 +74,7 @@ public class CalendarTest {
         }
 
 
-
-
-        Print.printCalendarArray(a,dayNow,weekends);
-
-
-
+        Print.printCalendarArray(a, dayNow, weekends);
 
 
         assertThat(formatter.toString(), equalTo(outContent.toString()));
@@ -97,19 +84,30 @@ public class CalendarTest {
     @Test
     public void CalendarHeader() {
         int[] weekends = {1, 1, 0, 0, 0, 0, 0};
-        int weekStartWithThisDayInt = 2;
+        int weekStartWithThisDayInt = 0;
         StringBuilder expected = new StringBuilder();
-        expected.append(" MON  TUE WED THU FRI " + RED_TEXT_START_TOKEN + "SAT" + RED_TEXT_END_TOKEN + " " + RED_TEXT_START_TOKEN + "SUN" + RED_TEXT_END_TOKEN + "\n");
+        int j = 0;
+        for (int i = weekStartWithThisDayInt; i < DAYS_IN_WEEK + weekStartWithThisDayInt; i++) {
+            if (weekends[j] == 1) {
+                expected.append(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, WeekFields.of(Locale.UK)
+                        .getFirstDayOfWeek()
+                        .plus(i)
+                        .getDisplayName(TextStyle.SHORT, Locale.UK)
+                        .toUpperCase()));
+            } else {
+                expected.append(String.format("%4s", WeekFields.of(Locale.UK)
+                        .getFirstDayOfWeek()
+                        .plus(i)
+                        .getDisplayName(TextStyle.SHORT, Locale.UK)
+                        .toUpperCase()));
+            }
+            j++;
+        }
+        expected.append("\n");
 
         Print.printCalendarHeader(weekends, weekStartWithThisDayInt);
 
         assertThat(expected.toString(), equalTo(outContent.toString()));
-    }
-
-    @Test
-    public void err() {
-        System.out.print("hello again");
-        assertEquals("hello again", outContent.toString());
     }
 
     @Test

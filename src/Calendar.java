@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -11,9 +13,12 @@ public class Calendar {
     private static Print print = new Print();
 
     public static void main(String[] args) throws IOException {
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         int[][] a = new int[6][7];
         LocalDate specificDate = getDate(args);
-        int weekStartWithThisDayInt = 1;
+        System.out.println("С какого дня начинается неделя (1- пн, 7 - ВС) = ");
+        int weekStartWithThisDayInt = Integer.parseInt(input.readLine());
+        weekStartWithThisDayInt--;
         int[] weekends = {0, 1, 1, 0, 1, 0, 0};
 
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);

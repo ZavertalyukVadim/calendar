@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Created by Вадимка on 16.07.2016.
  */
-public class Calendar {
+public class Calendar extends PrintCalendar {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;
     private static final int SATURDAY_INDEX = 5;
@@ -25,21 +25,17 @@ public class Calendar {
         LocalDate specificDate = getDate(args);
         //Выбираем Локацию
         Locale locale =Locale.ENGLISH;
-        boolean flag;
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
+        //формируем массив
         if(locale.equals(Locale.ENGLISH)){
-            flag=true;
-            fillInCalendarArray(a, firstDayWeekIndex, monthLength);
+            fillInCalendarArray(a, firstDayWeekIndex+1, monthLength);
         }
         else{
-            flag=false;
             fillInCalendarArray(a, firstDayWeekIndex, monthLength);
         }
-
-
 
         // /выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
@@ -77,14 +73,17 @@ public class Calendar {
                 else if (locale.equals(Locale.ENGLISH)){
                     if(j == SATURDAY_INDEX_FOR_ENGLAND || j == SUNDAY_INDEX_FOR_ENGLAND)
                     System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
+                    else {
+                        System.out.printf("%4d", a[i][j]);
+                    }
                 }
-//                else if (locale!=locale.ENGLISH){
-//                    if(j == SATURDAY_INDEX || j == SUNDAY_INDEX)
-//                    System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
-//                }
-
-                else
-                    System.out.printf("%4d", a[i][j]);
+                else if (locale!=locale.ENGLISH){
+                    if(j == SATURDAY_INDEX || j == SUNDAY_INDEX)
+                    System.out.printf(RED_TEXT_START_TOKEN + "%4d" + RED_TEXT_END_TOKEN, a[i][j]);
+                    else {
+                        System.out.printf("%4d", a[i][j]);
+                    }
+                }
             }
             System.out.println();
         }

@@ -53,39 +53,6 @@ class Print {
             j++;
         }
         System.out.println();
-
-//            if (locale.equals(Locale.ENGLISH)||locale.equals(Locale.CANADA)) {/////////////////
-//                if (i == 0 || i == 6) {
-//                    System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, WeekFields.of(locale)
-//                            .getFirstDayOfWeek()
-//                            .plus(i)
-//                            .getDisplayName(TextStyle.SHORT, locale)
-//                            .toUpperCase()));
-//                } else {
-//                    System.out.print(String.format("%4s", WeekFields.of(locale)
-//                            .getFirstDayOfWeek()
-//                            .plus(i)
-//                            .getDisplayName(TextStyle.SHORT, locale)
-//                            .toUpperCase()));
-//                }
-//            }
-//            if (locale != Locale.ENGLISH && locale != Locale.CANADA) {/////////////////////////
-//                if (i == 5 || i == 6) {
-//                    System.out.print(String.format(RED_TEXT_START_TOKEN + "%4s" + RED_TEXT_END_TOKEN, WeekFields.of(locale)
-//                            .getFirstDayOfWeek()
-//                            .plus(i)
-//                            .getDisplayName(TextStyle.SHORT, locale)
-//                            .toUpperCase()));
-//                } else {
-//                    System.out.print(String.format("%4s", WeekFields.of(locale)
-//                            .getFirstDayOfWeek()
-//                            .plus(i)
-//                            .getDisplayName(TextStyle.SHORT, locale)
-//                            .toUpperCase()));
-//                }
-//            }
-
-
     }
 
 

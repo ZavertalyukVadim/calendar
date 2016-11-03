@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Locale;
 
 /**
  * Created by Вадимка on 16.07.2016.
@@ -17,8 +16,6 @@ public class Calendar {
         int weekStartWithThisDayInt = 1;
         int[] weekends = {0, 1, 1, 0, 1, 0, 0};
 
-        //Выбираем Локацию
-        Locale locale = Locale.UK;
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         //узнаем количество дней в заданом месяце
@@ -34,7 +31,7 @@ public class Calendar {
         print.printCalendarArray(a, specificDate.getDayOfMonth(), weekends);
     }
 
-    static LocalDate getDate(String[] args) {
+   private static LocalDate getDate(String[] args) {
         LocalDate today = LocalDate.now();
         if (args.length > 0) {
             try {
@@ -51,7 +48,7 @@ public class Calendar {
     }
 
     //формирование массива с днями месяца
-    static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
+    private static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number = 1;
         for (int i = dayOfWeek - 2; i < DAYS_IN_WEEK; i++) {
             a[0][i] = number;
@@ -68,9 +65,8 @@ public class Calendar {
     }
 
     //Узнаем день, с которого начинается месяц
-    static int weekIndexOfFirstDay(LocalDate specificDate) {
-        Integer firstDayWeekIndex = specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
-        return firstDayWeekIndex;
+    private static int weekIndexOfFirstDay(LocalDate specificDate) {
+        return specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
     }
 
 }

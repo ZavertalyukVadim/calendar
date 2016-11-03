@@ -19,11 +19,11 @@ public class Calendar {
         LocalDate specificDate = getDate(args);
         System.out.println("С какого дня начинается неделя (1- пн, 7 - ВС) = ");
         int weekStartWithThisDayInt = Integer.parseInt(input.readLine());
-        weekStartWithThisDayInt--;
+//        weekStartWithThisDayInt--;
         int[] weekends = {0, 0, 0, 0, 0, 0, 0};
         System.out.println("Введите '1', когда хотите, что бы этот день был выходным, а когда рабочим - 0''");
         for (int i = 0; i < weekends.length; i++) {
-            System.out.println(i+j+"-ы день");
+            System.out.println(i+j+"-ы/ой день");
             weekends[i]= Integer.parseInt(input.readLine());
         }
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);

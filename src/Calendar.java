@@ -18,12 +18,13 @@ public class Calendar {
         LocalDate specificDate = getDate(args);
         System.out.println("С какого дня начинается неделя (1- пн, 7 - ВС) = ");
         int weekStartWithThisDayInt = Integer.parseInt(input.readLine());
-        int[] weekends = {0, 0, 0, 0, 0, 0, 0};
-        System.out.println("Введите '1', когда хотите, что бы этот день был выходным, а когда рабочим - 0''");
-        for (int i = 0; i < weekends.length; i++) {
-            System.out.println(i+j+"-ы/ой день");
-            weekends[i]= Integer.parseInt(input.readLine());
-        }
+        weekStartWithThisDayInt--;
+        int[] weekends = {0, 0, 0, 1, 0, 0, 0};
+//        System.out.println("Введите '1', когда хотите, что бы этот день был выходным, а когда рабочим - 0''");
+//        for (int i = 0; i < weekends.length; i++) {
+//            System.out.println(i+j+"-ы/ой день");
+//            weekends[i]= Integer.parseInt(input.readLine());
+//        }
         int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         //узнаем количество дней в заданом месяце
@@ -58,7 +59,7 @@ public class Calendar {
     //формирование массива с днями месяца
     private static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number = 1;
-        for (int i = dayOfWeek - 2; i < DAYS_IN_WEEK; i++) {
+        for (int i = dayOfWeek -2; i < DAYS_IN_WEEK; i++) {
             a[0][i] = number;
             number++;
         }

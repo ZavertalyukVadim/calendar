@@ -48,14 +48,8 @@ public class CalendarTest {
         StringBuilder expected = new StringBuilder();
         Formatter formatter = new Formatter(expected, Locale.US);
         int[][] a = new int[6][7];
-        int day = 1;
         int dayNow = 9;
-        int[] weekends = {0, 0, 0, 0, 0, 0, 0};
-        for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
-            for (int j = 0; j < DAYS_IN_WEEK; j++, day++) {
-                a[i][j] = day;
-            }
-        }
+        int[] weekends = {0, 0,1, 0, 0, 0, 0};
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
                 if (a[i][j] == 0) {

@@ -14,7 +14,7 @@ class PrintInWeb {
     private static final String OPEN_TAG_TABLE_ROW = "<tr>";
     private static final String CLOSE_TAG_TABLE_ROW = "</tr>";
 
-    static String printCalendarInWeb(List<Integer> weekends, int monthStartWithThisDate, int[][] massiveWithCalendar, int nowDay) {
+   String printCalendarInWeb(List<Integer> weekends, int monthStartWithThisDate, int[][] massiveWithCalendar, int nowDay) {
         return printHeaderHTML() +
                 printCalendarHeader(weekends, monthStartWithThisDate) +
                 printCalendarArray(massiveWithCalendar, nowDay, weekends, monthStartWithThisDate) +

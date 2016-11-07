@@ -18,40 +18,61 @@ class PrintInConsole {
                 printCalendarArray(massiveWithCalendar, nowDay, weekends, monthStartWithThisDate);
     }
 
-    public static String printCalendarArray(int[][] massiveWithCalendar, int currentDay, List<Integer> weekends, int monthStartWithThisDate) {
+    public static String printCalendarArray(int[][] massiveOfCalendar, int currentDay,
+                                            List<Integer> weekends, int monthStartWithThisDate) {
         StringBuilder printerCalendarArray = new StringBuilder();
         for (int i = 0; i < MAX_WEEKS_IN_MONTH; i++) {
             for (int j = 0; j < DAYS_IN_WEEK; j++) {
-                if (massiveWithCalendar[i][j] == 0) {
-                    printerCalendarArray.append(String.format("%4s", ""));
-                    continue;
-                }
-                if (massiveWithCalendar[i][j] == currentDay)
-                    printerCalendarArray.append(String.format(GREEN_TEXT_START_TOKEN + "%4d" + EXT_END_TOKEN, massiveWithCalendar[i][j]));
-                else if (weekends.contains(j+monthStartWithThisDate))
-                    printerCalendarArray.append(String.format(RED_TEXT_START_TOKEN + "%4d" + EXT_END_TOKEN, massiveWithCalendar[i][j]));
-                else {
-                    printerCalendarArray.append(String.format("%4d", massiveWithCalendar[i][j]));
-                }
+                selectionOfDay(massiveOfCalendar[i][j], isCurrentDay(massiveOfCalendar[i][j], currentDay),
+                        weekends.contains(j + monthStartWithThisDate), printerCalendarArray);
             }
             printerCalendarArray.append("\n");
         }
         return printerCalendarArray.toString();
     }
 
+    private static boolean isCurrentDay(int day, int currentDay) {
+        return day == currentDay;
+    }
+
+    private static void selectionOfDay(int currentPosition, boolean currentDay, boolean weekends, StringBuilder printerCalendarArray) {
+        if (currentPosition == 0) {
+            printerCalendarArray.append(getFormat("%4s", ""));
+            return;
+        }
+        if (currentDay)
+            printerCalendarArray.append(getFormat(currentPosition, GREEN_TEXT_START_TOKEN + "%4d" + EXT_END_TOKEN));
+        else if (weekends)
+            printerCalendarArray.append(getFormat(currentPosition, RED_TEXT_START_TOKEN + "%4d" + EXT_END_TOKEN));
+        else {
+            printerCalendarArray.append(getFormat(currentPosition, "%4d"));
+        }
+    }
+
+    private static String getFormat(int i, String format) {
+        return String.format(format, i);
+    }
+
     public static String printCalendarHeader(List<Integer> weekends, int firstDaySelectedMonth) {
         StringBuilder printerCalendarHeader = new StringBuilder();
         for (int i = firstDaySelectedMonth; i < DAYS_IN_WEEK + firstDaySelectedMonth; i++) {
-            System.out.println(i);
-            if (weekends.contains(i)) {
-                printerCalendarHeader.append(String.format(RED_TEXT_START_TOKEN + "%4s" + EXT_END_TOKEN, getTypeOfInputCalendarHeader(i)));
-            } else {
-                printerCalendarHeader.append(String.format("%4s", getTypeOfInputCalendarHeader(i)));
-
-            }
+            selectionWeekends(weekends, printerCalendarHeader, i);
         }
         printerCalendarHeader.append("\n");
         return printerCalendarHeader.toString();
+    }
+
+    private static void selectionWeekends(List<Integer> weekends, StringBuilder printerCalendarHeader, int currentPosition) {
+        if (weekends.contains(currentPosition)) {
+            printerCalendarHeader.append(getFormat(RED_TEXT_START_TOKEN + "%4s" + EXT_END_TOKEN, getTypeOfInputCalendarHeader(currentPosition)));
+        } else {
+            printerCalendarHeader.append(getFormat("%4s", getTypeOfInputCalendarHeader(currentPosition)));
+
+        }
+    }
+
+    private static String getFormat(String format, String typeOfInputCalendarHeader) {
+        return String.format(format, typeOfInputCalendarHeader);
     }
 
     private static String getTypeOfInputCalendarHeader(int i) {

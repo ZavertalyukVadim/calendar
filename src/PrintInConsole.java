@@ -3,9 +3,7 @@ import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by employee on 11/4/16.
- */
+
 class PrintInConsole {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;

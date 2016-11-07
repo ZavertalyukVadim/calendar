@@ -33,7 +33,7 @@ class PrintInWeb {
                 }
                 if (massiveWithCalendar[i][j] == day)
                     printerCalendarArray.append(String.format(CURRENT_DAY_TEXT_START_TOKEN_IN_WEB + "%4d" + TEXT_END_TOKEN_IN_WEB, massiveWithCalendar[i][j]));
-                else if (weekends.contains(j)) {
+                else if (weekends.contains(j + monthStartWithThisDate)) {
                     printerCalendarArray.append(String.format(WEEKEND_TEXT_START_TOKEN_IN_WEB + "%4d" + TEXT_END_TOKEN_IN_WEB, massiveWithCalendar[i][j]));
                 } else {
                     printerCalendarArray.append(String.format(OPEN_TAG_TABLE_COLUMN + "%4d" + CLOSE_TAG_TABLE_COLUMN, massiveWithCalendar[i][j]));
@@ -70,7 +70,7 @@ class PrintInWeb {
                 "           color: green;\n" +
                 "       }\n" +
                 "       td{\n" +
-                "           padding:50px;\n" +
+                "           padding:5px;\n" +
                 "       }\n" +
                 "   </style>\n" +
                 "</head>\n" +

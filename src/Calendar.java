@@ -1,44 +1,62 @@
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Calendar {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;
 
     public static void main(String[] args) throws IOException {
-        int[][] a = new int[6][7];
+        int[][] massiveWithCalendar = new int[6][7];
         int counter;
         LocalDate specificDate = getDate(args);
 
-        int firstDayInMonth = specificDate.with(TemporalAdjusters.firstDayOfMonth()).getDayOfWeek().getValue();
 
-        int firstDayOfCalendar = DayOfWeek.FRIDAY.minus(1).getValue();
+        int firstDayOfYourCalendar = getFirstDayOfYourWeek();
 
-        int[] weekends = {DayOfWeek.MONDAY.plus(firstDayOfCalendar).getValue(), DayOfWeek.TUESDAY.plus(firstDayOfCalendar).getValue()};
+        List<Integer> weekends = getWeekends();
 
-        boolean console = true;
         boolean web = true;
 
         int monthLength = specificDate.lengthOfMonth();
 
-        if (firstDayOfCalendar == 0) {
+        if (firstDayOfYourCalendar == 0) {
             counter = 0;
-        } else counter = 7 - firstDayOfCalendar;
+        } else counter = 7 - firstDayOfYourCalendar;
 
-        fillInCalendarArray(a, firstDayInMonth + counter, monthLength);
+        int firstDayInMonth = specificDate.with(TemporalAdjusters.firstDayOfMonth()).getDayOfWeek().getValue();
+
+        fillInCalendarArray(massiveWithCalendar, firstDayInMonth + counter, monthLength);
 
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
-        if (console && web) {
+        if (web) {
             try (PrintWriter printWriter = new PrintWriter("text3.html")) {
-                printWriter.println(PrintInWeb.printCalendarInWeb(weekends, firstDayOfCalendar, a, specificDate.getDayOfMonth()));
+                printWriter.println(PrintInWeb.printCalendarInWeb(weekends, firstDayOfYourCalendar, massiveWithCalendar, specificDate.getDayOfMonth()));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            System.out.println(PrintInConsole.printCalendarInConsole(weekends, firstDayOfCalendar, a, specificDate.getDayOfMonth()));
+            System.out.println(PrintInConsole.printCalendarInConsole(weekends, firstDayOfYourCalendar, massiveWithCalendar, specificDate.getDayOfMonth()));
         }
+    }
+
+    private static int getFirstDayOfYourWeek() {
+        return DayOfWeek.WEDNESDAY.minus(1).getValue();
+    }
+
+    private static List<Integer> getWeekends() {
+        List<Integer> weekends = new ArrayList<>();
+        weekends.add(DayOfWeek.SATURDAY.minus(1).getValue());
+        weekends.add(DayOfWeek.SUNDAY.minus(1).getValue());
+        weekends.add(DayOfWeek.MONDAY.minus(1).getValue());
+        weekends.add(DayOfWeek.THURSDAY.minus(1).getValue());
+        weekends.add(DayOfWeek.WEDNESDAY.minus(1).getValue());
+        return weekends;
     }
 
     private static LocalDate getDate(String[] args) {

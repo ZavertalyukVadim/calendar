@@ -12,30 +12,24 @@ public class Calendar {
         int[][] a = new int[6][7];
         int counter;
         LocalDate specificDate = getDate(args);
-        //первый день месяца
+
         int firstDayInMonth = specificDate.with(TemporalAdjusters.firstDayOfMonth()).getDayOfWeek().getValue();
 
-
-        //Change first day of week
         int firstDayOfCalendar = DayOfWeek.FRIDAY.minus(1).getValue();
 
-        //change weekends
         int[] weekends = {DayOfWeek.MONDAY.plus(firstDayOfCalendar).getValue(), DayOfWeek.TUESDAY.plus(firstDayOfCalendar).getValue()};
 
         boolean console = true;
         boolean web = true;
 
-        //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
 
         if (firstDayOfCalendar == 0) {
             counter = 0;
         } else counter = 7 - firstDayOfCalendar;
 
-        //формируем массив
         fillInCalendarArray(a, firstDayInMonth + counter, monthLength);
 
-        ///выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
         if (console && web) {
             try (PrintWriter printWriter = new PrintWriter("text3.html")) {
@@ -49,7 +43,6 @@ public class Calendar {
 
     private static LocalDate getDate(String[] args) {
         LocalDate today = LocalDate.now();
-//        System.out.println("!!!!!!!!!!"+today.getDayOfWeek().name());
         if (args.length > 0) {
             try {
                 int year = Integer.parseInt(args[0]);
@@ -64,7 +57,6 @@ public class Calendar {
         return today;
     }
 
-    //формирование массива с днями месяца
     private static void fillInCalendarArray(int[][] a, int dayOfWeek, int dayInMonth) {
         int number = 1;
         for (int i = dayOfWeek - 1; i < DAYS_IN_WEEK; i++) {

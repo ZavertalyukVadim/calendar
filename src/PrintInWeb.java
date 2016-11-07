@@ -5,9 +5,9 @@ import java.util.Locale;
 class PrintInWeb {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;
-    private static final String WEEKEND_TEXT_START_TOKEN_IN_WEB ="<td class=\"weekend\">";
+    private static final String WEEKEND_TEXT_START_TOKEN_IN_WEB = "<td class=\"weekend\">";
 
-//"<td class=\"anotherMonthColor\">" + formattedDay + "</td>";
+    //"<td class=\"anotherMonthColor\">" + formattedDay + "</td>";
     private static final String TEXT_END_TOKEN_IN_WEB = "</td>";
     private static final String CURRENT_DAY_TEXT_START_TOKEN_IN_WEB = "<td class=\"currentDay\">";
 
@@ -34,9 +34,9 @@ class PrintInWeb {
                     continue;
                 }
                 if (a[i][j] == day)
-                    printerCalendarArray.append(String.format(CURRENT_DAY_TEXT_START_TOKEN_IN_WEB + "%4d" + TEXT_END_TOKEN_IN_WEB , a[i][j]));
+                    printerCalendarArray.append(String.format(CURRENT_DAY_TEXT_START_TOKEN_IN_WEB + "%4d" + TEXT_END_TOKEN_IN_WEB, a[i][j]));
                 else if (j == weekends[0] - monthStartWithThisDate || j == weekends[1] - monthStartWithThisDate) {
-                    printerCalendarArray.append(String.format( WEEKEND_TEXT_START_TOKEN_IN_WEB + "%4d" + TEXT_END_TOKEN_IN_WEB , a[i][j]));
+                    printerCalendarArray.append(String.format(WEEKEND_TEXT_START_TOKEN_IN_WEB + "%4d" + TEXT_END_TOKEN_IN_WEB, a[i][j]));
                 } else {
                     printerCalendarArray.append(String.format(OPEN_TAG_TABLE_COLUMN + "%4d" + CLOSE_TAG_TABLE_COLUMN, a[i][j]));
                 }
@@ -51,7 +51,7 @@ class PrintInWeb {
         printerCalendarHeader.append(OPEN_TAG_TABLE_ROW);
         for (int i = dayStartWithThisDate; i < DAYS_IN_WEEK + dayStartWithThisDate; i++) {
             if (i == weekends[0] || i == weekends[1]) {
-                printerCalendarHeader.append(String.format(WEEKEND_TEXT_START_TOKEN_IN_WEB + "%4s" + TEXT_END_TOKEN_IN_WEB , WeekFields.of(Locale.UK)
+                printerCalendarHeader.append(String.format(WEEKEND_TEXT_START_TOKEN_IN_WEB + "%4s" + TEXT_END_TOKEN_IN_WEB, WeekFields.of(Locale.UK)
                         .getFirstDayOfWeek()
                         .plus(i)
                         .getDisplayName(TextStyle.SHORT, Locale.UK)
@@ -83,9 +83,9 @@ class PrintInWeb {
                 "           color: orange;\n" +
                 "       }\n" +
                 "       td{\n" +
-                "           padding:2px;\n" +
+                "           padding:50px;\n" +
                 "       }\n" +
-                "   </style>\n"+
+                "   </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "<table>";

@@ -1,54 +1,55 @@
 import java.io.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.TemporalAdjusters;
 
 public class Calendar {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS_IN_MONTH = 6;
-    PrintInConsole printInConsole = new PrintInConsole();
-    PrintInWeb printInWeb = new PrintInWeb();
 
     public static void main(String[] args) throws IOException {
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         int[][] a = new int[6][7];
+        int counter;
         LocalDate specificDate = getDate(args);
-        System.out.println("С какого дня начинается неделя (1- пн, 7 - ВС) = ");
-        int weekStartWithThisDay = Integer.parseInt(input.readLine());
-        weekStartWithThisDay--;
-        int[] weekends = {0, 0, 0, 0, 0, 1, 1};
+        //первый день месяца
+        int firstDayInMonth = specificDate.with(TemporalAdjusters.firstDayOfMonth()).getDayOfWeek().getValue();
+
+
+        //Change first day of week
+        int firstDayOfCalendar = DayOfWeek.FRIDAY.minus(1).getValue();
+
+        //change weekends
+        int[] weekends = {DayOfWeek.MONDAY.plus(firstDayOfCalendar).getValue(), DayOfWeek.TUESDAY.plus(firstDayOfCalendar).getValue()};
+
         boolean console = true;
         boolean web = true;
-//        int j=1;
-//        System.out.println("Введите '1', когда хотите, что бы этот день был выходным, а когда рабочим - 0''");
-//        for (int i = 0; i < weekends.length; i++) {
-//            System.out.println(i+j+"-ы/ой день");
-//            weekends[i]= Integer.parseInt(input.readLine());
-//        }
-
-        int firstDayWeekIndex = weekIndexOfFirstDay(specificDate);
 
         //узнаем количество дней в заданом месяце
         int monthLength = specificDate.lengthOfMonth();
 
-        //формируем массив
-        fillInCalendarArray(a, firstDayWeekIndex + weekStartWithThisDay, monthLength);
+        if (firstDayOfCalendar == 0) {
+            counter = 0;
+        } else counter = 7 - firstDayOfCalendar;
 
+        //формируем массив
+        fillInCalendarArray(a, firstDayInMonth + counter, monthLength);
 
         ///выводим введенное дату,время
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
-
         if (console && web) {
             try (PrintWriter printWriter = new PrintWriter("text3.html")) {
-                printWriter.println(PrintInWeb.printCalendarInWeb(weekends, specificDate.getDayOfMonth(), a, weekStartWithThisDay));
+                printWriter.println(PrintInWeb.printCalendarInWeb(weekends, firstDayOfCalendar, a, specificDate.getDayOfMonth()));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            System.out.println(PrintInConsole.printCalendarInWeb(weekends, specificDate.getDayOfMonth(), a, weekStartWithThisDay));
+            System.out.println(PrintInConsole.printCalendarInConsole(weekends, firstDayOfCalendar, a, specificDate.getDayOfMonth()));
         }
     }
 
     private static LocalDate getDate(String[] args) {
         LocalDate today = LocalDate.now();
+//        System.out.println("!!!!!!!!!!"+today.getDayOfWeek().name());
         if (args.length > 0) {
             try {
                 int year = Integer.parseInt(args[0]);
@@ -78,11 +79,6 @@ public class Calendar {
                     return;
             }
         }
-    }
-
-    //Узнаем день, с которого начинается месяц
-    private static int weekIndexOfFirstDay(LocalDate specificDate) {
-        return specificDate.withDayOfMonth(1).getDayOfWeek().getValue();
     }
 
 }

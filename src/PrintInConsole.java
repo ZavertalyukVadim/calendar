@@ -28,7 +28,7 @@ class PrintInConsole {
                 }
                 if (massiveWithCalendar[i][j] == currentDay)
                     printerCalendarArray.append(String.format(GREEN_TEXT_START_TOKEN + "%4d" + EXT_END_TOKEN, massiveWithCalendar[i][j]));
-                else if (weekends.contains(j + monthStartWithThisDate))
+                else if (weekends.contains(j+monthStartWithThisDate))
                     printerCalendarArray.append(String.format(RED_TEXT_START_TOKEN + "%4d" + EXT_END_TOKEN, massiveWithCalendar[i][j]));
                 else {
                     printerCalendarArray.append(String.format("%4d", massiveWithCalendar[i][j]));
@@ -42,6 +42,7 @@ class PrintInConsole {
     public static String printCalendarHeader(List<Integer> weekends, int firstDaySelectedMonth) {
         StringBuilder printerCalendarHeader = new StringBuilder();
         for (int i = firstDaySelectedMonth; i < DAYS_IN_WEEK + firstDaySelectedMonth; i++) {
+            System.out.println(i);
             if (weekends.contains(i)) {
                 printerCalendarHeader.append(String.format(RED_TEXT_START_TOKEN + "%4s" + EXT_END_TOKEN, getTypeOfInputCalendarHeader(i)));
             } else {

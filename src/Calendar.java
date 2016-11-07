@@ -36,7 +36,7 @@ public class Calendar {
 
         System.out.println("Дата с указанием года, месяца и дня : " + specificDate);
         if (web) {
-            try (PrintWriter printWriter = new PrintWriter("text3.html")) {
+            try (PrintWriter printWriter = new PrintWriter("calendar.html")) {
                 printWriter.println(PrintInWeb.printCalendarInWeb(weekends, firstDayOfYourCalendar, massiveWithCalendar, specificDate.getDayOfMonth()));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -46,7 +46,7 @@ public class Calendar {
     }
 
     private static int getFirstDayOfYourWeek() {
-        return DayOfWeek.WEDNESDAY.minus(1).getValue();
+        return DayOfWeek.THURSDAY.minus(1).getValue();
     }
 
     private static List<Integer> getWeekends() {
@@ -55,7 +55,6 @@ public class Calendar {
         weekends.add(DayOfWeek.SUNDAY.minus(1).getValue());
         weekends.add(DayOfWeek.MONDAY.minus(1).getValue());
         weekends.add(DayOfWeek.THURSDAY.minus(1).getValue());
-        weekends.add(DayOfWeek.WEDNESDAY.minus(1).getValue());
         return weekends;
     }
 
